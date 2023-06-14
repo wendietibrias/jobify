@@ -1,5 +1,5 @@
 import "../../assets/scss/pages/allJob.scss";
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback,useEffect, useMemo, useState } from 'react';
 import { Input, Select,JobCard,Loading, Pagination } from "../../components";
 import APIJobCall from "../../api/APIJob";
 import useAuthStore from "../../store/useAuthStore";
@@ -35,32 +35,9 @@ const AllJob = () => {
       });
    }  
 
-   const nextPrevHandler = (type : string, totalPage : number) => {
-     let page : number = pagination.current_page;
+  
 
-     if(totalPage === 1) return;
-
-      if(type === "next") {
-          if(pagination.current_page >= totalPage) {
-              page = 1;
-          } else {
-             page = pagination.current_page + 1;
-          }
-      } else {
-          if(pagination.current_page <= 1) {
-              page = totalPage;
-          } else {
-              page = pagination.current_page - 1;
-          }
-      }
-
-           setPagination({
-            ...pagination,
-            current_page:page
-          });
-   }
-
-   const fetchAllJob = async (search : string = "") => {
+   const fetchAllJob = useCallback(async (search : string = "") => {
     setLoading(true);
       try {
         const { data } = await APIJob.get(`/all-job?search=${search}&type=${form.type}&status=${form.status}&sort=${form.sort}&page=${pagination?.current_page}&per_page=${pagination?.per_page}`);
@@ -81,45 +58,27 @@ const AllJob = () => {
          return err;
       }
    }
+,[APIJob,form,pagination])
 
 
-   const deleteJob = async (id : string) => {
-       try {
-         const { data } = await APIJob.delete(`/delete/${id}`);
+   const sendSearchRequest = useCallback((value : string) => {
+       fetchAllJob(value);
+   } ,[fetchAllJob]);
 
-         if(data && data.statusCode === 200) {
-            fetchAllJob();
+   const debounceFn = useMemo(() =>  {
+       return debounce(sendSearchRequest, 1000);
+   },[sendSearchRequest])
 
-         }
-
-       } catch(err) {
-          return err;
-       }
-   }
-
-   const clearFilter = () => {
-       return setForm({
-          search:"",
-          sort:"",
-          type:"",
-          status:""
-       });
-   }
-
-   const searchTerms = (e : ChangeEvent<HTMLInputElement>) => {
+   const searchHandler = (e : ChangeEvent<HTMLInputElement>) => {
        setForm({
         ...form,
         search:e.target.value
        });
-
-       setLoading(true);
-
-       debounce(async () => {
-          await fetchAllJob(e.target.value);
-       },1000)
+    
+       debounceFn(e.target.value);
    }
 
-   const changeHandler = async (e : any) => {
+   const filterHandler = async (e : any) => {
         const value = e.target.value;
         const name = e.target.name;
 
@@ -167,9 +126,65 @@ const AllJob = () => {
         }
    }
 
+      const deleteJob = async (id : string) => {
+       try {
+         const { data } = await APIJob.delete(`/delete/${id}`);
+
+         if(data && data.statusCode === 200) {
+            fetchAllJob();
+
+         }
+
+       } catch(err) {
+          return err;
+       }
+   }
+   
+   const clearFilter = () => {
+       return setForm({
+          search:"",
+          sort:"",
+          type:"",
+          status:""
+       });
+   }
+
+    const nextPrevHandler = (type : string, totalPage : number) => {
+     let page : number = pagination.current_page;
+
+     if(totalPage === 1) return;
+
+     switch(type) {
+         case "next":
+ 
+         if(pagination.current_page >= totalPage) {
+              page = 1;
+          } else {
+             page = pagination.current_page + 1;
+          }
+
+          break;
+
+         case "prev":
+
+          if(pagination.current_page <= 1) {
+              page = totalPage;
+          } else {
+              page = pagination.current_page - 1;
+          }
+
+          break;
+     }
+
+       setPagination({
+          ...pagination,
+         current_page:page
+       });
+   }
+
 
    useEffect(() => {
-     fetchAllJob();
+     fetchAllJob("");
    },[pagination.current_page]);
 
     return (
@@ -179,19 +194,19 @@ const AllJob = () => {
                 <form className="all-job-filter-form">
                     <div className="form-control">
                         <label>Search</label>
-                        <Input name="search" value={form.search} changeEvent={changeHandler} type="text"/>
+                        <Input name="search" value={form.search} changeEvent={searchHandler} type="text"/>
                     </div>
                     <div className="form-control">
                         <label>Status</label>
-                        <Select value={form.status} name="status" changeEvent={changeHandler} options={["All","Pending",'Interview','Declined']}  />
+                        <Select value={form.status} name="status" changeEvent={filterHandler} options={["All","Pending",'Interview','Declined']}  />
                     </div>
                       <div className="form-control">
                         <label>Type</label>
-                        <Select value={form.type} name="type" changeEvent={changeHandler} options={["All","Full-Time",'Part-Time','Remote']}  />
+                        <Select value={form.type} name="type" changeEvent={filterHandler} options={["All","Full-Time",'Part-Time','Remote']}  />
                     </div>
                     <div className="form-control">
                         <label>Sort</label>
-                        <Select value={form.sort} name="sort" changeEvent={changeHandler} options={["latest","oldest", "a-z","z-a"]}  />
+                        <Select value={form.sort} name="sort" changeEvent={filterHandler} options={["latest","oldest", "a-z","z-a"]}  />
                     </div>
                     <button type="button" onClick={clearFilter} className="submit-button">Clear Filters</button>
                 </form>
