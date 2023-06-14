@@ -24,7 +24,7 @@ const Navbar = ({
    
   const logoutHandler = async () => {
       try {
-        const { data } = await axios.delete('http://localhost:8080/api/auth/logout', {
+        const { data } = await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/auth/logout`, {
            headers: {
               Authorization:`Bearer ${token}`
            }

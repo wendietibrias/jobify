@@ -5,6 +5,10 @@
     width:100%;
     min-height:100vh;
 
+    @media (max-width:576px) {
+      padding:1rem;
+    }
+
     @include flex(row,center,center);
 
      .container-auth {
@@ -12,6 +16,10 @@
         border-top:solid 5px var(--primary-500);
         background-color:var(--white);
         box-shadow:var(--shadow-3);
+
+        @media (max-width:576px) {
+         width:100%;
+        }
 
         @include flex(column,center,center);
         padding:1.5rem;
