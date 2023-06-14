@@ -1,0 +1,323 @@
+@import "../mixins/mixins.scss";
+
+.input-box {
+    width:100%;
+    background-color:var(--grey-50);
+    border:solid 1px var(--grey-100);
+    padding:0.5rem;
+    border-radius:4px;
+    outline:none;
+    font-weight:500;
+}
+
+.select-box {
+      width: 100%;
+      background-color: var(--grey-50);
+      border: solid 1px var(--grey-100);
+      padding: 0.5rem;
+      border-radius: 4px;
+      outline: none;
+      font-weight: 500;
+}
+
+.alert {
+    width:100%;
+    padding:0.5rem 0.8rem;
+    border-radius:2px;
+    margin-top:1.5rem;
+  
+    @include flex(row , space-between,center);
+
+    h5 {
+        font-size:1rem;
+        font-weight:500;
+    }
+
+    .close-button {
+        font-weight:600;
+        font-size:1rem;
+    }
+
+    &.wait {
+        background-color:var(--primary-50);
+
+         h5 , .close-button {
+            color:var(--primary-500);
+         }
+    }
+
+     &.error {
+        background-color:var(--red-light);
+          
+        h5 , .close-button{
+            color:var(--red-dark);
+        }
+     }
+
+     &.success {
+        background-color: var(--green-light);
+         
+         h5, .close-button {
+            color:var(--green-dark);
+         }
+     }
+}
+
+.sidebar {
+    width:16vw;
+    background-color:var(--white);
+    height:100vh;
+    padding:1rem;
+
+     .links-container {
+        list-style:none;
+        margin-top:2rem;
+
+        @include flex(column,flex-start,flex-start);
+
+        row-gap:1.3rem;
+
+         .link-item {
+             @include flex(row , flex-start,center);
+             column-gap:0.9rem;
+             color:var(--grey-600);
+
+             span {
+                font-size:0.95rem;
+             }
+              
+              .icon-link {
+                 font-size:1.6rem;
+              }
+
+              &.active {
+                 span, .icon-link {
+                    color:var(--primary-500);
+                 }
+              }
+         }
+     }
+}
+
+.navbar {
+   background-color: var(--white);
+   width:100%;
+   padding:1rem 2rem;
+   position:relative;
+   box-shadow:var(--shadow-1);
+
+   @include flex(row, space-between, center);
+
+   .burger-menu {
+      color:var(--primary-500);
+      font-size:1.6rem;
+   }
+
+    h4{
+      font-size:1.7rem;
+      font-weight:400;
+    }
+
+    .dropdown-user-button {
+      background-color: var(--primary-500);
+      color:var(--white) !important;
+      border-radius:4px;
+      font-size:1rem;
+      
+      @include flex (row,center,center);
+      column-gap:0.5rem;
+      
+      padding:0.5rem 1rem;
+
+       span {
+         font-weight:600;
+         font-size:0.8rem;
+       }
+    }
+
+    .dropdown {
+      background-color: var(--white);
+      position:absolute;
+      right:20px;
+      top:60px;
+      box-shadow:var(--shadow-2);
+      border-radius:4px;
+      padding:0.8rem 1.5rem;
+      z-index:9999;
+
+       button {
+          @include flex(row,center,center);
+          column-gap:0.5rem;
+          font-size:1.2rem;
+          color:var(--primary-500);
+          span {
+            font-weight:600;
+            font-size: 0.9rem;
+          }
+       }
+    }
+}
+
+.job-card {
+   background-color: var(--white);
+   box-shadow:var(--shadow-1);
+
+    header {
+      padding:0.8rem;
+      border-bottom:solid 1px var(--grey-100);
+
+      @include flex (row , flex-start,flex-start);
+      column-gap:1rem;
+
+       .job-profile {
+         width:60px;
+         height:60px;
+         border-radius:4px;
+         background-color: var(--primary-500);
+         color:var(--white);
+         font-weight:700;
+         font-size:1.8rem;
+
+         @include flex (row,center,center);
+       }
+
+       .job-desc {
+         h4 {
+            font-size:1.4rem;
+            font-weight:500;
+         }
+
+         h5 {
+            color:var(--grey-500);
+            font-weight:500;
+            font-size:0.95rem;
+            margin-top:0.3rem;
+         }
+       }
+    }
+
+    .job-detail {
+      width:100%;
+      display:flex;
+      align-items:center;
+      padding:1rem;
+      flex-wrap:wrap;
+
+      row-gap:0.8rem;
+
+       .job-detail-item {
+          width:50%;
+          color:var(--grey-600);
+          font-weight:500;
+          font-size:1.1rem;
+          @include flex(row,flex-start,center);
+          column-gap:0.7rem;
+
+           span {
+            font-size:0.95rem;
+            font-weight: 500;
+            line-height:0;
+            display: inline-block;
+           }
+
+           button {
+            padding:0.4rem 1rem;
+            font-size:0.95rem;
+            font-weight:600;
+            border-radius:4px;
+            box-shadow:var(--shadow-1);
+             
+              &.pending {
+                background-color:var(--pending-alt);
+                color:var(--pending-primary);
+              }
+
+              &.interview {
+                  background-color: var(--interview-alt);
+                  color: var(--interview-primary);
+              }
+
+              &.declined {
+                 background-color: var(--declined-alt);
+                 color: var(--declined-primary);
+              }
+           }
+       }
+    }
+
+    .job-action-button {
+       @include flex(row,flex-start,center);
+       column-gap:0.8rem;
+       padding:0 1rem 1rem;
+
+        button {
+         padding:0.4rem 1.2rem;
+         border-radius:4px;
+
+           &.edit {
+             background-color: var(--primary-100);
+             color:var(--primary-600);
+             font-weight:600;
+             box-shadow:var(--shadow-1);
+           }
+
+           &.delete {
+               background-color: var(--red-light);
+               color: var(--red-dark);
+               font-weight: 600;
+               box-shadow: var(--shadow-1);
+           }
+        }
+    }
+}
+
+.loading-container {
+    @include flex(column,center,center);
+    width:100%;
+    margin-top:2rem;
+
+     h2 {
+      color:var(--primary-600);
+      margin-top:0.8rem;
+     }
+}
+
+.pagination-content {
+   display:flex;
+   align-items:center;
+   justify-content:flex-end;
+   width:100%;
+   column-gap:0.6rem;
+
+    .prev-btn ,
+    .next-btn {
+       background-color:var(--white);
+       font-size:1rem;
+       font-weight:600;
+       color:var(--primary-500);
+       display:flex;
+       align-items:center;
+       column-gap:0.2rem;
+       padding:0.5rem 0.6rem;
+    }
+
+    .pagination-items {
+       display:flex;
+       align-items: center;
+       column-gap:0.2rem;
+
+        button {
+         background-color: var(--white);
+         padding:0.5rem 0.8rem;
+         font-size:1.1rem;
+         font-weight:600;
+         border-radius:4px;
+         color:var(--primary-500);
+
+          &.active {
+            background-color: var(--primary-500);
+            color:var(--white);
+          }
+        }
+    }
+}

@@ -1,0 +1,86 @@
+@import "../general/components.scss";
+@import "../mixins/mixins.scss";
+
+.stats-container {
+    padding:1.5rem 2rem;
+
+     .stats-grid {
+         width:100%;
+         @include grid(repeat(3,1fr));
+         column-gap:1rem;
+
+         .stats-grid-item {
+             width:100%;
+             background-color:var(--white);
+             padding:1rem 0.8rem;
+             border-radius:4px;
+
+             .stats-count {
+                @include flex(row,space-between,center);
+                h2 {
+                    font-size:1.9rem;
+                }
+
+                 article {
+                    padding:0.5rem 0.7rem;
+                    font-size:1.9rem;
+                    @include flex(row,center,center);
+                 }
+             }
+
+             h4 {
+                font-size:1.2rem;
+                font-weight:500;
+                margin-top:0.6rem;
+             }
+
+              &.pending {
+                border-top:solid 5px var(--pending-primary);
+
+                 .stats-count {
+                    h2 {
+                        color:var(--pending-primary);
+                    }
+                      article {
+                         background-color: var(--pending-alt);
+                         color:var(--pending-primary);
+                      }
+                 }
+              }
+
+              &.interview {
+                border-top:solid 5px var(--interview-primary);
+
+                .stats-count {
+                        h2 {
+                            color: var(--interview-primary);
+                        }
+                
+                        article {
+                            background-color: var(--interview-alt);
+                            color: var(--interview-primary);
+                        }
+                    }
+              }
+
+              &.declined {
+                border-top:solid 5px var(--declined-primary);
+                
+                .stats-count {
+                        h2 {
+                            color: var(--declined-primary);
+                        }
+                
+                        article {
+                            background-color: var(--declined-alt);
+                            color: var(--declined-primary);
+                        }
+                    }
+              }
+         }
+     }
+
+     .chart {
+        margin-top:2rem;
+     }
+}

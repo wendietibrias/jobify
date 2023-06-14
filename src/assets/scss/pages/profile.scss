@@ -1,0 +1,43 @@
+@import "../mixins/mixins.scss";
+
+.profile-container {
+    padding:1.5rem 2rem;
+
+     .profile-form-box {
+        box-shadow:var(--shadow-1);
+        padding:1.5rem;
+        background-color:var(--white);
+        border-radius:4px;
+
+        h2 {
+            font-weight:500;
+            font-size:1.5rem;
+        }
+
+        .profile-form-container {
+            @include flex(row, flex-start,center);
+            flex-wrap:wrap;
+            column-gap:1.2rem;
+            margin-top:1rem;
+            row-gap:0.8rem;
+
+             .form-control {
+                width:32%;
+                @include flex(column,flex-start,flex-start);
+                row-gap:0.5rem;
+             }
+
+             .submit-button {
+                width:32%;
+                background-color: var(--primary-500);
+                color:var(--white);
+                font-weight:500;
+                font-size:0.9rem;
+                box-shadow:var(--shadow-2);
+                padding:0.5rem;
+                border-radius:4px;
+                align-self:flex-end;
+             }
+        }
+     }
+}

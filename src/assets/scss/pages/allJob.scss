@@ -1,0 +1,67 @@
+@import "../mixins/mixins.scss";
+
+.all-job-container {
+    padding:1.5rem 2rem;
+
+     .all-job-filter-box {
+        background-color:var(--white);
+        padding:1.5rem;
+        box-shadow:var(--shadow-1);
+        border-radius:4px;
+        
+        h2 {
+            font-size:1.5rem;
+            font-weight:400;
+        }
+
+        .all-job-filter-form {
+            width:100%;
+            flex-wrap:wrap;
+            row-gap:0.8rem;
+            column-gap:1.3rem;
+            margin-top:1rem;           
+ 
+            @include flex(row,flex-start,center);
+
+            .form-control {
+                width:32%;
+
+                @include flex(column, flex-start,flex-start);
+                row-gap:0.5rem;
+            }
+
+            .submit-button {
+                width:32%;
+                align-self:flex-end;
+                background-color:var(--red-light);
+                color:var(--red-dark);
+                font-weight:600;
+                padding:0.5rem;
+                border-radius:4px;
+                box-shadow:var(--shadow-2);
+            }
+        }
+     }
+
+     .all-job-content {
+        margin-top:2rem;
+        h2 {
+            font-weight:600;
+            font-size:1.3rem;
+        }
+
+        .job-card-container {
+             width:100%;
+             margin-top:1.2rem;
+
+             @include grid(repeat(2,1fr));
+             gap:0.8rem;
+        }
+     }
+
+     .pagination-container {
+        margin-top:2rem;
+     }
+
+     
+}
