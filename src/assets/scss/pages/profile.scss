@@ -3,6 +3,10 @@
 .profile-container {
     padding:1.5rem 2rem;
 
+    @media (max-width:576px) {
+      padding:1.5rem 1rem;
+    }
+
      .profile-form-box {
         box-shadow:var(--shadow-1);
         padding:1.5rem;
@@ -25,6 +29,14 @@
                 width:32%;
                 @include flex(column,flex-start,flex-start);
                 row-gap:0.5rem;
+
+                @media (max-width:991px) {
+                  width:50%;
+                }
+
+                @media (max-width:660px) {
+                   width:100%;
+                }
              }
 
              .submit-button {
@@ -37,6 +49,11 @@
                 padding:0.5rem;
                 border-radius:4px;
                 align-self:flex-end;
+
+               @media (max-width:991px) {
+                     width: 100%;
+                     margin-top: 1rem;
+                  }
              }
         }
      }

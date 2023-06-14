@@ -3,6 +3,10 @@
 .all-job-container {
     padding:1.5rem 2rem;
 
+    @media (max-width:576px) {
+        padding:1.5rem 1rem;
+    }
+
      .all-job-filter-box {
         background-color:var(--white);
         padding:1.5rem;
@@ -28,6 +32,14 @@
 
                 @include flex(column, flex-start,flex-start);
                 row-gap:0.5rem;
+
+                @media (max-width:991px) {
+                    width:48%;
+                }
+
+                @media (max-width:660px) {
+                    width:100%;
+                }
             }
 
             .submit-button {
@@ -39,6 +51,11 @@
                 padding:0.5rem;
                 border-radius:4px;
                 box-shadow:var(--shadow-2);
+
+                @media (max-width:991px) {
+                    width:100%;
+                    margin-top:1rem;
+                }
             }
         }
      }
@@ -56,6 +73,10 @@
 
              @include grid(repeat(2,1fr));
              gap:0.8rem;
+
+             @media (max-width:991px) {
+                 @include grid(repeat(1,1fr));
+             }
         }
      }
 

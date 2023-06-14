@@ -1,4 +1,5 @@
 import { BiChevronsLeft,BiChevronsRight } from "react-icons/bi";
+import { useEffect } from "react";
 
 interface IPaginationProps {
     total:number;
@@ -16,11 +17,11 @@ const Pagination = ({
     nextPrevHandler
 } : IPaginationProps) => {
    const pages : any = [];
-   const totalPage : number = Math.ceil((total / per_page));
+   const totalPage : number = Math.ceil((total / per_page)) || 1;
  
-   for(let i = 0; i < totalPage; i++) {
-      pages.push(i+1);
-   }
+    for(let i = 0; i < totalPage; i++) {
+         pages.push(i+1);
+     }
 
    if(!Array.isArray(pages) && pages.length < 1 ) {
        return null;
@@ -33,7 +34,7 @@ const Pagination = ({
             Prev
         </button>
         <div className="pagination-items">
-            {pages.map((page : number, idx : number) => (
+            {pages.length > 0 && pages.map((page : number, idx : number) => (
                  <button onClick={() => onChangePage(totalPage,page)} className={`${current_page === page ? 'active' : ''}`} key={idx}>{page}</button>
             ))}
         </div>

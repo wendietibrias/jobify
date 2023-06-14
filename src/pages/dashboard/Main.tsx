@@ -2,13 +2,15 @@ import { Outlet,Navigate,useLocation } from "react-router-dom";
 import { Sidebar,Navbar } from "../../components";
 import useAuthStore from "../../store/useAuthStore";
 import useAlertStore from "../../store/useAlertStore";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import APIUserCall from "../../api/APIUser";
 
 const Main = () => {
     const { closeHandler } : any = useAlertStore();
     const { token,setName } : any = useAuthStore();
     const { pathname } = useLocation();
+
+    const [openSidebar,setOpenSidebar] = useState<boolean>(true);
 
     const APIUser = APIUserCall(token);
 
@@ -27,10 +29,22 @@ const Main = () => {
 
         return null;
     }
+
+    window.onresize = function() {
+        if(window.innerWidth < 1250) {
+            setOpenSidebar(false);
+        } else {
+            setOpenSidebar(true);
+        }
+    }
  
     useEffect(() => {
         closeHandler();
         fetchUser();
+
+        if(window.innerWidth < 1250) {
+             setOpenSidebar(false);
+        }
     } ,[pathname])
 
     if(!token) {
@@ -41,9 +55,9 @@ const Main = () => {
 
     return (
         <div className="main">
-           <Sidebar/>
-           <main className="content">
-              <Navbar/>
+           <Sidebar open={openSidebar} />
+           <main className={`content ${openSidebar ? '' : 'active'}`}>
+              <Navbar open={openSidebar} setOpenSidebar={setOpenSidebar} />
               <Outlet/>
            </main>
         </div>

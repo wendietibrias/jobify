@@ -7,7 +7,15 @@ import APIAuth from '../api/APIAuth';
 import axios from 'axios';
 import useAuthStore from '../store/useAuthStore';
 
-const Navbar = () => {
+interface INavbarProps {
+    setOpenSidebar:any;
+    open:boolean;
+}
+
+const Navbar = ({
+    setOpenSidebar,
+    open
+} : INavbarProps) => {
   const { token,removeToken,name } : any = useAuthStore();
 
   const [openDropdown,setOpendropdown] = useState<boolean>(false);
@@ -39,7 +47,7 @@ const Navbar = () => {
 
   return (
     <nav className='navbar'>
-        <button className="burger-menu">
+        <button onClick={() => setOpenSidebar(!open)} className="burger-menu">
             <HiMenuAlt1/>
         </button>
         <h4>Dashboard</h4>

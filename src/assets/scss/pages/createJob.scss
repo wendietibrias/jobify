@@ -2,6 +2,10 @@
 
 .create-container {
     padding:1.5rem 2rem;
+ 
+    @media (max-width:576px) {
+      padding:1.5rem 1rem;
+    }
 
      .create-box {
         background-color:var(--white);
@@ -26,6 +30,14 @@
 
                @include flex(column, flex-start,flex-start);
                row-gap:0.6rem;
+
+               @media (max-width:991px) {
+                  width:48%;
+               }
+
+               @media (max-width:660px) {
+                     width: 100%;
+               }
             }
 
             .submit-button {
@@ -38,6 +50,11 @@
                align-self:flex-end;
                margin-bottom:0.2rem;
                @include flex(row,center,center);
+
+               @media (max-width:991px) {
+                  width:100%;
+                  margin-top:1rem;
+               }
             }
          }
      }

@@ -101,10 +101,26 @@ button {
 .main {
     display:flex;
     align-items:flex-start;
+    position:relative;
+    transition:all 0.5s ease;
 }
 
 .content {
     width:84vw;
     height:100vh;
-    overflow-y:scroll;
+    overflow-y:scroll; 
+    position:absolute;
+    top:0;
+    right:0;
+    
+}
+
+.content.active {
+    width:100%;
+}
+
+@media (width <= 1250px) {
+     .content {
+        width:100%;
+     }
 }

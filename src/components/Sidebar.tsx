@@ -6,6 +6,10 @@ import Logo from "./Logo";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
+interface ISidebarProps {
+    open:boolean
+}
+
 const sidebarLists = [
     {
         path:"/",
@@ -29,11 +33,13 @@ const sidebarLists = [
     }
 ]
 
-const Sidebar = () => {
+const Sidebar = ({
+    open
+} : ISidebarProps) => {
    const { pathname } = useLocation();
 
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${open ? 'active' : ''}`}>
             <header>
                 <Logo/>
             </header>

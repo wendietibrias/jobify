@@ -1,9 +1,10 @@
 import "../../assets/scss/pages/allJob.scss";
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Input, Select,JobCard,Loading, Pagination } from "../../components";
 import APIJobCall from "../../api/APIJob";
 import useAuthStore from "../../store/useAuthStore";
 import { IJobState, IPaginationState } from "../../interfaces/useStateInterfaces";
+import { debounce } from "lodash"
 
 const AllJob = () => {
    const { token } : any = useAuthStore();
@@ -59,10 +60,10 @@ const AllJob = () => {
           });
    }
 
-   const fetchAllJob = async () => {
+   const fetchAllJob = async (search : string = "") => {
     setLoading(true);
       try {
-        const { data } = await APIJob.get(`/all-job?search=${form.search}&type=${form.type}&status=${form.status}&sort=${form.sort}&page=${pagination?.current_page}&per_page=${pagination?.per_page}`);
+        const { data } = await APIJob.get(`/all-job?search=${search}&type=${form.type}&status=${form.status}&sort=${form.sort}&page=${pagination?.current_page}&per_page=${pagination?.per_page}`);
 
         if(data && data.statusCode === 200) {
            setJobs(data.data.data);
@@ -105,7 +106,20 @@ const AllJob = () => {
        });
    }
 
-   const changeHandler = (e : any) => {
+   const searchTerms = (e : ChangeEvent<HTMLInputElement>) => {
+       setForm({
+        ...form,
+        search:e.target.value
+       });
+
+       setLoading(true);
+
+       debounce(async () => {
+          await fetchAllJob(e.target.value);
+       },1000)
+   }
+
+   const changeHandler = async (e : any) => {
         const value = e.target.value;
         const name = e.target.name;
 
@@ -113,12 +127,50 @@ const AllJob = () => {
             ...form,
             [name]:value
         });
+
+        let params = ""
+
+        switch(name) {
+           case "type" :
+            params = `type=${value}&status=${form.status}&search=${form.search}&sort=${form.sort}`
+           break;
+
+           case "status" :
+            params = `status=${value}&type=${form.type}&search=${form.search}&sort=${form.sort}`
+           break;
+
+           case "sort" :
+            params = `sort=${value}&type=${form.type}&search=${form.search}&status=${form.status}`
+           break;
+        }
+
+        setLoading(true);
+
+        try {
+
+        const { data } = await APIJob.get(`/all-job?${params}&page=${pagination?.current_page}&per_page=${pagination?.per_page}`);
+
+        if(data && data.statusCode === 200) {
+           setJobs(data.data.data);
+           setPagination({
+              total:data.data.total,
+              current_page:data.data.current_page,
+              per_page:data.data.per_page
+           });
+
+           setLoading(false);
+        }
+
+        } catch(err) {
+          setLoading(false);
+          return err;
+        }
    }
 
 
    useEffect(() => {
      fetchAllJob();
-   },[form,pagination.current_page]);
+   },[pagination.current_page]);
 
     return (
         <div className="all-job-container">
@@ -141,7 +193,7 @@ const AllJob = () => {
                         <label>Sort</label>
                         <Select value={form.sort} name="sort" changeEvent={changeHandler} options={["latest","oldest", "a-z","z-a"]}  />
                     </div>
-                    <button onClick={clearFilter} className="submit-button">Clear Filters</button>
+                    <button type="button" onClick={clearFilter} className="submit-button">Clear Filters</button>
                 </form>
             </section>
 
@@ -161,7 +213,7 @@ const AllJob = () => {
                  )}
             </section>
            )}
-           {Array.isArray(jobs) &&  loading === false && (
+           {Array.isArray(jobs) && jobs.length > 0 &&  loading === false && (
              <section className="pagination-container">
              <Pagination onChangePage={changePage} nextPrevHandler={nextPrevHandler} total={pagination.total} per_page={pagination.per_page} current_page={pagination.current_page} />
            </section>
