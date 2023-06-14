@@ -37,6 +37,14 @@ const Main = () => {
             setOpenSidebar(true);
         }
     }
+
+    const closeSidebarHandler = (e : any) => {
+      if(openSidebar && window.innerWidth < 1250) {
+          if(!e.target.className.includes("sidebar")) {
+             setOpenSidebar(false);
+          }
+      }
+    }
  
     useEffect(() => {
         closeHandler();
@@ -45,7 +53,7 @@ const Main = () => {
         if(window.innerWidth < 1250) {
              setOpenSidebar(false);
         }
-    } ,[pathname])
+    } ,[pathname]);
 
     if(!token) {
         return (
@@ -54,7 +62,7 @@ const Main = () => {
     }
 
     return (
-        <div className="main">
+        <div className="main" onClick={closeSidebarHandler}>
            <Sidebar open={openSidebar} />
            <main className={`content ${openSidebar ? '' : 'active'}`}>
               <Navbar open={openSidebar} setOpenSidebar={setOpenSidebar} />

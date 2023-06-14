@@ -75,6 +75,7 @@
     
     @media (max-width:1250px) {
        width:50%;
+       z-index:9999;
     }
 
     @media (max-width:576px) {
@@ -83,7 +84,6 @@
 
     &.active {
       left:0;
-      z-index:999;
     }
 
      .links-container {
@@ -122,6 +122,10 @@
    padding:1rem 2rem;
    position:relative;
    box-shadow:var(--shadow-1);
+
+   @media (max-width:576px) {
+      padding:1rem;
+   }
 
    @include flex(row, space-between, center);
 
