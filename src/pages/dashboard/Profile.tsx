@@ -7,7 +7,7 @@ import useAlertStore from "../../store/useAlertStore";
 import { IProfileState } from "../../interfaces/useStateInterfaces";
 
 const Profile = () => {
-    const { open , openHandler,closeHandler } : any = useAlertStore();
+    const { open , openHandler } : any = useAlertStore();
     const { token,setName } : any = useAuthStore();
     const APIUser = APIUserCall(token);
 

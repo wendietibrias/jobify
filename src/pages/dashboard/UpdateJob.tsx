@@ -1,7 +1,7 @@
 import "../../assets/scss/pages/createJob.scss";
 import { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
-import { Input,Select,Alert } from "../../components";
+import { Input,Select,Alert,Loading } from "../../components";
 import { ICreateJobState } from "../../interfaces/useStateInterfaces";
 import useAuthStore from "../../store/useAuthStore";
 import useAlertStore from "../../store/useAlertStore";
@@ -9,7 +9,7 @@ import APIJobCall from "../../api/APIJob";
 
 const UpdateJob = () => {
   const { token } : any = useAuthStore();
-  const { open,openHandler,closeHandler } : any = useAlertStore();
+  const { open,openHandler } : any = useAlertStore();
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -123,7 +123,11 @@ const UpdateJob = () => {
                     <label>Status</label>
                     <Select name="status" value={form.status} changeEvent={changeHandler} options={["Pending" , "Interview" , "Declined"]}/>
                 </div>
-                <button className="submit-button">Submit</button>
+                <button className="submit-button">
+                  {
+                    loading ? <Loading type="small" width="20px" height="20px" color="#fff" /> : "submit"
+                  }
+                </button>
             </form>
          </section>
     </div>

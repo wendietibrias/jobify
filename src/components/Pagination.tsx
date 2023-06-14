@@ -1,5 +1,4 @@
 import { BiChevronsLeft,BiChevronsRight } from "react-icons/bi";
-import { useEffect } from "react";
 
 interface IPaginationProps {
     total:number;

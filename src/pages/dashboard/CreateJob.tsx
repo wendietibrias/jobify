@@ -1,5 +1,5 @@
 import "../../assets/scss/pages/createJob.scss";
-import { ChangeEvent, useState } from "react";
+import {  useState } from "react";
 import { Input,Select,Loading,Alert } from "../../components";
 import { ICreateJobState } from "../../interfaces/useStateInterfaces";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import useAuthStore from "../../store/useAuthStore";
 import useAlertStore from "../../store/useAlertStore";
 
 const CreateJob = () => {
-   const { openHandler , open ,closeHandler } : any = useAlertStore();
+   const { openHandler , open  } : any = useAlertStore();
    const { token } : any = useAuthStore();
    const APIJob = APIJobCall(token);
    const navigate = useNavigate();

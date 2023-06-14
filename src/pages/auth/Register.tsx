@@ -1,15 +1,16 @@
 import "../../assets/scss/pages/auth.scss";
-import { useState,useEffect,ChangeEvent } from "react";
+import { useState,ChangeEvent } from "react";
 import { IRegisterState } from "../../interfaces/useStateInterfaces";
 import { Input,Alert,Loading } from "../../components";
 import Logo from "../../assets/image/logo.svg";
-import { Link,useNavigate } from "react-router-dom";
+import { Link,Navigate,useNavigate } from "react-router-dom";
 import useAlertStore from "../../store/useAlertStore";
 import useAuthStore from "../../store/useAuthStore";
 import APIAuth from "../../api/APIAuth";
 
 const Register = () => {
     const navigate = useNavigate();
+    const { token } : any = useAuthStore();
     const { openHandler,closeHandler,open } : any = useAlertStore();
 
     const [loading,setLoading] = useState<boolean>(false);
@@ -81,6 +82,10 @@ const Register = () => {
       }
 
       setLoading(false);
+   }
+
+   if(token) {
+     return <Navigate to="/" />
    }
 
     return (

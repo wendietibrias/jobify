@@ -1,5 +1,5 @@
 import "../../assets/scss/pages/auth.scss";
-import { useState,useEffect, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import Logo from "../../assets/image/logo.svg";
 import { Input,Alert,Loading } from "../../components";
 import { ILoginState } from "../../interfaces/useStateInterfaces";

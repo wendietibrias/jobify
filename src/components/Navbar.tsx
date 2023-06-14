@@ -1,9 +1,8 @@
-import React, { useState,useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import { HiMenuAlt1 } from 'react-icons/hi';
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import APIAuth from '../api/APIAuth';
 import axios from 'axios';
 import useAuthStore from '../store/useAuthStore';
 
