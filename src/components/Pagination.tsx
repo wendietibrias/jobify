@@ -4,14 +4,16 @@ interface IPaginationProps {
     total:number;
     current_page:number;
     per_page:number;
-    onChangePage:(totalPage : number,page : number) => void
+    onChangePage:(totalPage : number,page : number) => void,
+    nextPrevHandler: (type : string,totalPage : number) => void
 }
 
 const Pagination = ({
     total,
     current_page,
     per_page,
-    onChangePage
+    onChangePage,
+    nextPrevHandler
 } : IPaginationProps) => {
    const pages : any = [];
    const totalPage : number = Math.ceil((total / per_page));
@@ -26,7 +28,7 @@ const Pagination = ({
 
   return (
     <div className="pagination-content">
-        <button className="prev-btn">
+        <button onClick={() => nextPrevHandler("prev",totalPage)} className="prev-btn">
             <BiChevronsLeft/>
             Prev
         </button>
@@ -35,7 +37,7 @@ const Pagination = ({
                  <button onClick={() => onChangePage(totalPage,page)} className={`${current_page === page ? 'active' : ''}`} key={idx}>{page}</button>
             ))}
         </div>
-        <button className="next-btn">
+        <button onClick={() => nextPrevHandler("next",totalPage)} className="next-btn">
             Next
             <BiChevronsRight/>
         </button>

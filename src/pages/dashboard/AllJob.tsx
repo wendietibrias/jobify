@@ -34,6 +34,31 @@ const AllJob = () => {
       });
    }  
 
+   const nextPrevHandler = (type : string, totalPage : number) => {
+     let page : number = pagination.current_page;
+
+     if(totalPage === 1) return;
+
+      if(type === "next") {
+          if(pagination.current_page >= totalPage) {
+              page = 1;
+          } else {
+             page = pagination.current_page + 1;
+          }
+      } else {
+          if(pagination.current_page <= 1) {
+              page = totalPage;
+          } else {
+              page = pagination.current_page - 1;
+          }
+      }
+
+           setPagination({
+            ...pagination,
+            current_page:page
+          });
+   }
+
    const fetchAllJob = async () => {
     setLoading(true);
       try {
@@ -69,6 +94,15 @@ const AllJob = () => {
        } catch(err) {
           return err;
        }
+   }
+
+   const clearFilter = () => {
+       return setForm({
+          search:"",
+          sort:"",
+          type:"",
+          status:""
+       });
    }
 
    const changeHandler = (e : any) => {
@@ -107,7 +141,7 @@ const AllJob = () => {
                         <label>Sort</label>
                         <Select value={form.sort} name="sort" changeEvent={changeHandler} options={["latest","oldest", "a-z","z-a"]}  />
                     </div>
-                    <button className="submit-button">Clear Filters</button>
+                    <button onClick={clearFilter} className="submit-button">Clear Filters</button>
                 </form>
             </section>
 
@@ -129,7 +163,7 @@ const AllJob = () => {
            )}
            {Array.isArray(jobs) &&  loading === false && (
              <section className="pagination-container">
-             <Pagination onChangePage={changePage} total={pagination.total} per_page={pagination.per_page} current_page={pagination.current_page} />
+             <Pagination onChangePage={changePage} nextPrevHandler={nextPrevHandler} total={pagination.total} per_page={pagination.per_page} current_page={pagination.current_page} />
            </section>
            )}
         </div>
