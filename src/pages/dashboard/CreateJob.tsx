@@ -8,7 +8,7 @@ import useAuthStore from "../../store/useAuthStore";
 import useAlertStore from "../../store/useAlertStore";
 
 const CreateJob = () => {
-   const { openHandler , open  } : any = useAlertStore();
+   const { openAlertHandler , open  } : any = useAlertStore();
    const { token } : any = useAuthStore();
    const APIJob = APIJobCall(token);
    const navigate = useNavigate();
@@ -35,7 +35,7 @@ const CreateJob = () => {
     const submitHandler = async (e : any) => {
       e.preventDefault();
 
-      openHandler({
+      openAlertHandler({
         open:true,
         message:'Creating job...',
         variant:'wait'
@@ -49,7 +49,7 @@ const CreateJob = () => {
 
         if(data.statusCode === 200) {
            setLoading(false);
-           openHandler({
+           openAlertHandler({
            open:true,
            message:data.message,
            variant:'success'
@@ -69,7 +69,7 @@ const CreateJob = () => {
       } catch(err : any) {
          setLoading(false);
          const { response:{ data } } = err;
-           openHandler({
+           openAlertHandler({
            open:true,
            message:data.message,
            variant:'error'

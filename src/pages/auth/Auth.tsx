@@ -6,10 +6,10 @@ import useAuthStore from "../../store/useAuthStore";
 const Auth = () => {
     const { token } : any = useAuthStore();
     const { pathname } = useLocation();
-    const { closeHandler } : any = useAlertStore();
+    const { closeAlertHandler } : any = useAlertStore();
 
     useEffect(() => {
-        closeHandler();
+        closeAlertHandler();
     },[pathname]);
 
     if(token) {

@@ -9,12 +9,12 @@ const alertState : IAlertStore = {
 
 const useAlertStore = create((set) => ({
   ...alertState,
-  openHandler:(payload : IAlertStore) => set((state : IAlertStore) => ({
+  openAlertHandler:(payload : IAlertStore) => set((state : IAlertStore) => ({
       open:payload.open,
       message:payload.message,
       variant:payload.variant
   })),
-  closeHandler:() => set((state : IAlertStore) => ({
+  closeAlertHandler:() => set((state : IAlertStore) => ({
      open:false,
      message:"",
      variant:""

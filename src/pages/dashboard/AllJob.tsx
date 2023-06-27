@@ -35,8 +35,6 @@ const AllJob = () => {
       });
    }  
 
-  
-
    const fetchAllJob = useCallback(async (search : string = "") => {
     setLoading(true);
       try {
@@ -156,23 +154,18 @@ const AllJob = () => {
 
      switch(type) {
          case "next":
- 
          if(pagination.current_page >= totalPage) {
               page = 1;
           } else {
              page = pagination.current_page + 1;
           }
-
           break;
-
          case "prev":
-
           if(pagination.current_page <= 1) {
               page = totalPage;
           } else {
               page = pagination.current_page - 1;
           }
-
           break;
      }
 

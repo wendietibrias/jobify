@@ -12,7 +12,7 @@ import useAlertStore from "../../store/useAlertStore";
 const Login = () => {
    const navigate = useNavigate();
    const { setToken } : any = useAuthStore();
-   const { open,openHandler,closeHandler } : any = useAlertStore();
+   const { open,openAlertHandler,closeAlertHandler } : any = useAlertStore();
   
    const [loading,setLoading] = useState<boolean>(false);
    const [form,setForm] = useState<ILoginState>({
@@ -34,7 +34,7 @@ const Login = () => {
       e.preventDefault();
 
       if(form.email === '' || form.password === '') {
-         return openHandler({
+         return openAlertHandler({
             open:true,
             message:"Please provide all value",
             variant:"error"
@@ -43,7 +43,7 @@ const Login = () => {
 
       setLoading(true);
 
-      openHandler({
+      openAlertHandler({
         open:true,
         message:"Redirecting...",
         variant:"wait"
@@ -54,7 +54,7 @@ const Login = () => {
         
         if(data && data.statusCode >= 200) {
           setLoading(false);
-           openHandler({
+           openAlertHandler({
               open:true,
               message:"Success login",
               variant:"success"
@@ -64,7 +64,7 @@ const Login = () => {
            localStorage.setItem("jobify_token"  ,JSON.stringify(data?.data?.access_token));
 
            return setTimeout(() => {
-               closeHandler();
+               closeAlertHandler();
                navigate("/");
            },  3000);
         }
@@ -73,7 +73,7 @@ const Login = () => {
       } catch(err : any) {
         setLoading(false);
         if(err) {
-          openHandler({
+          openAlertHandler({
               open:true,
               message:err?.response?.data?.message,
               variant:"error"

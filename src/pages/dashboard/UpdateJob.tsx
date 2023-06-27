@@ -9,7 +9,7 @@ import APIJobCall from "../../api/APIJob";
 
 const UpdateJob = () => {
   const { token } : any = useAuthStore();
-  const { open,openHandler } : any = useAlertStore();
+  const { open,openAlertHandler } : any = useAlertStore();
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const UpdateJob = () => {
   const submitHandler = async (e : any) => {
     e.preventDefault();
 
-    openHandler({
+    openAlertHandler({
         open:true,
         message:"Updating job...",
         variant:"wait"
@@ -61,7 +61,7 @@ const UpdateJob = () => {
         const { data } = await APIJob.put(`/update/${idJob}`,form);
 
         if(data && data.statusCode === 200) {
-          openHandler({
+          openAlertHandler({
            open:true,
            message:"Success update job...",
            variant:"success"
@@ -74,7 +74,7 @@ const UpdateJob = () => {
 
     } catch(err : any) {
         const { response:{ data } } = err;
-        openHandler({
+        openAlertHandler({
            open:true,
            message:data.message,
            variant:"error"

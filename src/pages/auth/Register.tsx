@@ -11,7 +11,7 @@ import APIAuth from "../../api/APIAuth";
 const Register = () => {
     const navigate = useNavigate();
     const { token } : any = useAuthStore();
-    const { openHandler,closeHandler,open } : any = useAlertStore();
+    const { openAlertHandler,closeAlertHandler,open } : any = useAlertStore();
 
     const [loading,setLoading] = useState<boolean>(false);
     const [form,setForm] = useState<IRegisterState>({
@@ -40,14 +40,14 @@ const Register = () => {
         form.password === '' ||
         form.confirm === ''
       ) {
-        return openHandler({
+        return openAlertHandler({
             open:true,
             message:"Please provides all values",
             variant:"error"
         });
       }
 
-      openHandler({
+      openAlertHandler({
         open:true,
         message:"Redirecting...",
         variant:"wait"
@@ -60,21 +60,21 @@ const Register = () => {
         const { data } = await APIAuth.post(`/register` , form);
 
         if(data.statusCode >= 200) {
-             openHandler({
+             openAlertHandler({
               open:true,
               message:"Success login",
               variant:"success"
            });
 
            setTimeout(() => {
-             closeHandler();
+             closeAlertHandler();
              navigate("/auth/login");
            } ,3000)
         }
 
       } catch(err : any) {
          const { response:{ data } } = err;
-         openHandler({
+         openAlertHandler({
             open:true,
             message:data.message,
             variant:"error"

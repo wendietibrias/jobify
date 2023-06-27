@@ -7,7 +7,7 @@ import useAlertStore from "../../store/useAlertStore";
 import { IProfileState } from "../../interfaces/useStateInterfaces";
 
 const Profile = () => {
-    const { open , openHandler } : any = useAlertStore();
+    const { open , openAlertHandler } : any = useAlertStore();
     const { token,setName } : any = useAuthStore();
     const APIUser = APIUserCall(token);
 
@@ -53,7 +53,7 @@ const Profile = () => {
     const submitHandler = async (e : any) => {
         e.preventDefault();
 
-            openHandler({
+            openAlertHandler({
             open:true,
             message:"Updating profile...",
             variant:'wait'
@@ -63,7 +63,7 @@ const Profile = () => {
             const { data } = await APIUser.put(`/update/${profile?.id}`,profile);
 
             if(data && data.statusCode === 200) {
-               openHandler({
+               openAlertHandler({
                open:true,
                message:data.message,
                variant:'success'
@@ -74,7 +74,7 @@ const Profile = () => {
 
         } catch(err : any) {
           const { response:{ data } } = err;
-          openHandler({
+          openAlertHandler({
             open:true,
             message:data.message,
             variant:'error'
