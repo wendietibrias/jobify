@@ -1,12 +1,12 @@
 import useAlertStore from '../store/useAlertStore';
 
 const Alert = () => {
-  const { message,variant,closeHandler } : any = useAlertStore();
+  const { message,variant,closeAlertHandler } : any = useAlertStore();
 
   return (
     <div className={`alert ${variant}`}>
        <h5>{message}</h5>
-       <button onClick={closeHandler} className="close-button">x</button>
+       <button onClick={closeAlertHandler} className="close-button">x</button>
     </div>
   )
 }

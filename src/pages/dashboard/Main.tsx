@@ -6,7 +6,7 @@ import { useEffect,useState } from "react";
 import APIUserCall from "../../api/APIUser";
 
 const Main = () => {
-    const { closeHandler } : any = useAlertStore();
+    const { closeAlertHandler } : any = useAlertStore();
     const { token,setName } : any = useAuthStore();
     const { pathname } = useLocation();
 
@@ -47,7 +47,7 @@ const Main = () => {
     }
  
     useEffect(() => {
-        closeHandler();
+        closeAlertHandler();
         fetchUser();
 
         if(window.innerWidth < 1250) {
